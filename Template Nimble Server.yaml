@@ -1,0 +1,329 @@
+zabbix_export:
+  version: '5.2'
+  date: '2021-05-31T09:03:12Z'
+  groups:
+    -
+      name: Nimble
+  templates:
+    -
+      template: 'Template Nimble Streamer'
+      name: 'Template Nimble Streamer'
+      description: 'Nimble Streamer Template'
+      groups:
+        -
+          name: Nimble
+      applications:
+        -
+          name: 'Nimble Streamer'
+      items:
+        -
+          name: 'Nimble Server Connections'
+          key: 'nimble.server_status[Connections]'
+          delay: 30s
+          description: 'Nimble Streamer server_status API'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.Connections
+        -
+          name: 'Nimble Server FileCacheSize'
+          key: 'nimble.server_status[FileCacheSize]'
+          description: 'Nimble Streamer server_status API'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.FileCacheSize
+        -
+          name: 'Nimble Server MaxFileCacheSize'
+          key: 'nimble.server_status[MaxFileCacheSize]'
+          description: 'Nimble Streamer server_status API'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.MaxFileCacheSize
+        -
+          name: 'Nimble Server MaxRamCacheSize'
+          key: 'nimble.server_status[MaxRamCacheSize]'
+          description: 'Nimble Streamer server_status API'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.MaxRamCacheSize
+        -
+          name: 'Nimble Server OutRate'
+          key: 'nimble.server_status[OutRate]'
+          delay: 3m
+          units: bps
+          description: 'Nimble Streamer server_status API'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.OutRate
+        -
+          name: 'Nimble Server RamCacheSize'
+          key: 'nimble.server_status[RamCacheSize]'
+          description: 'Nimble Streamer server_status API'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.RamCacheSize
+        -
+          name: 'Nimble Server SysInfo Available processors'
+          key: 'nimble.server_status[SysInfo.ap]'
+          description: 'Nimble Streamer server_status API SysInfo'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.SysInfo.ap
+        -
+          name: 'Nimble Server SysInfo Free physical memory size'
+          key: 'nimble.server_status[SysInfo.fpms]'
+          description: 'Nimble Streamer server_status API SysInfo'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.SysInfo.fpms
+        -
+          name: 'Nimble Server SysInfo System CPU load'
+          key: 'nimble.server_status[SysInfo.scl]'
+          value_type: FLOAT
+          description: 'Nimble Streamer server_status API SysInfo'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.SysInfo.scl
+        -
+          name: 'Nimble Server SysInfo Total physical memory size'
+          key: 'nimble.server_status[SysInfo.tpms]'
+          description: 'Nimble Streamer server_status API SysInfo'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.SysInfo.tpms
+        -
+          name: 'Nimble Server SysInfo Total swap space size'
+          key: 'nimble.server_status[SysInfo.tsss]'
+          description: 'Nimble Streamer server_status API SysInfo'
+          applications:
+            -
+              name: 'Nimble Streamer'
+          preprocessing:
+            -
+              type: JSONPATH
+              parameters:
+                - $.SysInfo.tsss
+        -
+          name: 'Nimble Server Version'
+          key: nimble.server_version
+          delay: 3m
+          trends: '0'
+          value_type: TEXT
+          description: 'Nimble Streamer'
+          applications:
+            -
+              name: 'Nimble Streamer'
+        -
+          name: 'Nimble Streamer Consumed Memory'
+          key: 'proc.mem[nimble,,,,rss]'
+          delay: 30s
+          applications:
+            -
+              name: 'Nimble Streamer'
+        -
+          name: 'Nimble Streamer Service State'
+          key: 'proc.num[nimble]'
+          delay: 30s
+          applications:
+            -
+              name: 'Nimble Streamer'
+          triggers:
+            -
+              expression: '{last()}<=0'
+              name: 'Nimble Streamer is down'
+              priority: DISASTER
+              description: 'Nimble Streamer process is stopped'
+        -
+          name: 'Nimble Streamer RIST Services State'
+          key: 'proc.num[nimble_rist]'
+          delay: 30s
+          applications:
+            -
+              name: 'Nimble Streamer'
+      tags:
+        -
+          tag: 'Nimble Streamer'
+      dashboards:
+        -
+          name: 'Nimble Streamer'
+          widgets:
+            -
+              type: GRAPH_CLASSIC
+              x: '1'
+              width: '6'
+              height: '4'
+              fields:
+                -
+                  type: GRAPH
+                  name: graphid
+                  value:
+                    name: 'Nimble Streamer RAM Cache Usage'
+                    host: 'Template Nimble Streamer'
+            -
+              type: GRAPH_CLASSIC
+              x: '1'
+              'y': '4'
+              width: '12'
+              height: '5'
+              fields:
+                -
+                  type: GRAPH
+                  name: graphid
+                  value:
+                    name: 'Nimble Streamer Connections and OutRate'
+                    host: 'Template Nimble Streamer'
+            -
+              type: GRAPH_CLASSIC
+              x: '7'
+              width: '6'
+              height: '4'
+              fields:
+                -
+                  type: GRAPH
+                  name: graphid
+                  value:
+                    name: 'Nimble Streamer File Cache Usage'
+                    host: 'Template Nimble Streamer'
+  graphs:
+    -
+      name: 'Nimble Streamer Cache Usage'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 2774A4
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[MaxRamCacheSize]'
+        -
+          sortorder: '2'
+          color: AB47BC
+          yaxisside: RIGHT
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[MaxFileCacheSize]'
+        -
+          sortorder: '3'
+          drawtype: GRADIENT_LINE
+          color: D81B60
+          yaxisside: RIGHT
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[FileCacheSize]'
+        -
+          sortorder: '4'
+          drawtype: GRADIENT_LINE
+          color: 4FC3F7
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[RamCacheSize]'
+    -
+      name: 'Nimble Streamer Connections and OutRate'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 1A7C11
+          yaxisside: RIGHT
+          calc_fnc: ALL
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[Connections]'
+        -
+          sortorder: '2'
+          drawtype: GRADIENT_LINE
+          color: 2774A4
+          calc_fnc: ALL
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[OutRate]'
+    -
+      name: 'Nimble Streamer File Cache Usage'
+      width: '450'
+      yaxismax: '0'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      type: PIE
+      show_3d: 'YES'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 43A047
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[MaxFileCacheSize]'
+        -
+          sortorder: '2'
+          drawtype: GRADIENT_LINE
+          color: EC407A
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[FileCacheSize]'
+    -
+      name: 'Nimble Streamer RAM Cache Usage'
+      yaxismax: '0'
+      show_work_period: 'NO'
+      show_triggers: 'NO'
+      type: PIE
+      show_3d: 'YES'
+      graph_items:
+        -
+          sortorder: '1'
+          color: 43A047
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[MaxRamCacheSize]'
+        -
+          sortorder: '2'
+          drawtype: GRADIENT_LINE
+          color: EC407A
+          item:
+            host: 'Template Nimble Streamer'
+            key: 'nimble.server_status[RamCacheSize]'

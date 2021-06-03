@@ -1,0 +1,353 @@
+zabbix_export:
+  version: '5.2'
+  date: '2021-05-31T13:11:43Z'
+  groups:
+    -
+      name: Nimble
+  templates:
+    -
+      template: 'Template Nimble SRT'
+      name: 'Template Nimble SRT'
+      description: 'Nimble SRT metrics'
+      groups:
+        -
+          name: Nimble
+      applications:
+        -
+          name: SRT
+        -
+          name: '{#SRT_RECEIVER_ID}'
+      discovery_rules:
+        -
+          name: 'Nimble SRT Receivers Discovery'
+          key: srt.receiver.discovery
+          lifetime: 7d
+          description: 'SRT Receivers Stats Discovery'
+          item_prototypes:
+            -
+              name: 'SRT Receiver Retry Count {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},retryCount]'
+              history: 1d
+              trends: 7d
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} number of retrys'
+              application_prototypes:
+                -
+                  name: 'SRT {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver Status {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},state]'
+              history: 1d
+              trends: '0'
+              value_type: TEXT
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} status'
+              application_prototypes:
+                -
+                  name: 'SRT {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver Estimated mbpsBandwidth  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.link.mbpsBandwidth]'
+              history: 1d
+              trends: 7d
+              units: bps
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} mbpsBandwidth'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+            -
+              name: 'SRT Receiver Estimated mbpsMaxBandwidth  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.link.mbpsMaxBandwidth]'
+              history: 1d
+              trends: 7d
+              units: bps
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} mbpsMaxBandwidth'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+            -
+              name: 'SRT Receiver RTT  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.link.rtt]'
+              history: 1d
+              trends: 7d
+              units: '!ms'
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} Session time'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver bytesDropped  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.recv.bytesDropped]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: b
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} Dropped bytes'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver bytesLost  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.recv.bytesLost]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: b
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} lost bytes'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver Total Bytes Received  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.recv.bytesReceived]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: b
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} received bytes'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver Rate  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.recv.mbpsRate]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: bps
+              description: 'SRT Receiver {#SRT_RECEIVER_ID}'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+            -
+              name: 'SRT Receiver NAKs Sent  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.recv.NAKsSent]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} NAKsSent'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+            -
+              name: 'SRT Receiver Session Time  {#SRT_RECEIVER_ID}'
+              key: 'srt.receiver.stats[{#SRT_RECEIVER_ID},stats.time]'
+              history: 1d
+              trends: 7d
+              units: s
+              description: 'SRT Receiver {#SRT_RECEIVER_ID} Session time'
+              application_prototypes:
+                -
+                  name: 'SRT Receiver {#SRT_RECEIVER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+        -
+          name: 'Nimble SRT Senders Discovery'
+          key: srt.sender.discovery
+          lifetime: 7d
+          item_prototypes:
+            -
+              name: 'SRT Sender Retry Count  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},retryCount]'
+              history: 1d
+              trends: 7d
+              description: 'Number of retrys'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Status {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},state]'
+              history: 1d
+              trends: '0'
+              value_type: TEXT
+              description: 'Status of the  {#SRT_SENDER_ID} Stream'
+              applications:
+                -
+                  name: SRT
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+              trigger_prototypes:
+                -
+                  expression: '{str(connected)}=0 or {str(disconnected)}=1'
+                  name: 'SRT Sender {#SRT_SENDER_ID} Disconnected'
+                  priority: INFO
+                  description: 'Simple trigger on disconnected SRT sender'
+                  manual_close: 'YES'
+            -
+              name: 'SRT Sender Estimated mbpsBandwidth  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.link.mbpsBandwidth]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: bps
+              description: 'Estimated bandwidth of the network link, in Mbps.'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+            -
+              name: 'SRT Sender Limit mbpsMaxBW  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.link.mbpsMaxBandwidth]'
+              history: 1d
+              trends: 7d
+              units: bps
+              description: 'Transmission bandwidth limit, in Mbps.'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+            -
+              name: 'SRT Sender RTT {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.link.rtt]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: '!ms'
+              description: 'Smoothed round-trip time (SRTT), an exponentially-weighted moving average (EWMA) of an endpoint''s RTT samples, in milliseconds. Available both for sender and receiver.'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Total Bytes Dropped {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.send.bytesDropped]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: b
+              applications:
+                -
+                  name: SRT
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Total Bytes Retransmitted {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.send.bytesRetransmitted]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: b
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Total Bytes Sent {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.send.bytesSent]'
+              history: 1d
+              trends: 7d
+              units: b
+              description: '{#SRT_SENDER_ID} Same as pktSentTotal, but expressed in bytes, including payload and all the headers (20 bytes IPv4 + 8 bytes UDP + 16 bytes SRT). Available for sender.'
+              applications:
+                -
+                  name: SRT
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Rate {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.send.mbpsRate]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              units: bps
+              description: '{#SRT_SENDER_ID} Sending rate in Mbps.'
+              applications:
+                -
+                  name: SRT
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '1000000'
+            -
+              name: 'SRT Sender NAKsReceived {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.send.NAKsReceived]'
+              history: 1d
+              trends: 7d
+              value_type: FLOAT
+              description: 'The total number of received NAK (Negative Acknowledgement) control packets. Available for sender.'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Connection Time  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.time]'
+              history: 1d
+              trends: 7d
+              units: s
+              description: 'Connection time'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+              preprocessing:
+                -
+                  type: MULTIPLIER
+                  parameters:
+                    - '0.001'
+            -
+              name: 'SRT Sender Window Congestion  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.window.congestion]'
+              history: 1d
+              trends: 7d
+              units: '!pkt'
+              description: |
+                Congestion window size, in number of packets. Sender only.
+                
+                Dynamically limits the maximum number of packets that can be in flight. Congestion control module dynamically changes the value.
+                
+                In file mode this value starts at 16 and is increased to the number of reported acknowledged packets. This value is also updated based on the delivery rate, reported by the receiver. It represents the maximum number of packets that can be safely sent without causing network congestion. The higher this value is, the faster the packets can be sent. In live mode this field is not used.
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Window flight  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.window.flight]'
+              history: 1d
+              trends: 7d
+              units: '!pkt'
+              description: 'This is the distance between the packet sequence number that was last reported by an ACK message and the sequence number of the latest packet sent (at the moment when the statistics are being read).'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+            -
+              name: 'SRT Sender Window Flow  {#SRT_SENDER_ID}'
+              key: 'srt.sender.stats[{#SRT_SENDER_ID},stats.window.flow]'
+              history: 1d
+              trends: 7d
+              units: '!pkt'
+              description: 'The maximum number of packets that can be "in flight". Sender only. See also pktFlightSize.'
+              application_prototypes:
+                -
+                  name: 'SRT   {#SRT_SENDER_ID}'
+      tags:
+        -
+          tag: SRT
