@@ -15,4 +15,5 @@ Read the description article
 https://blog.wmspanel.com/2021/06/zabbix-monitoring-nimble-streamer-srt.html
 to learn more about installation and setup process.
 
-Demo video is coming soon.
+Here's a demo video:
+https://www.youtube.com/watch?v=_uJhY315WEE
