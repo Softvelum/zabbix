@@ -1,5 +1,5 @@
 # Zabbix templates and configs
-Zabbix templates and other related files for Nimble Streamer monitoring
+Zabbix templates and other related files for [Nimble Streamer](https://softvelum.com/nimble/) monitoring
 
 
 Basic step to add Nimble-specific metrics to your Zabbix server are:
